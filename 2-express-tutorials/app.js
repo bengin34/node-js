@@ -1,10 +1,10 @@
-const http = require('http')
+const express = require('express')
+const app = epxress();
 
-const server = http.createServer((req,res) => {
-    console.log('user hit the server')
-    res.end('home page')
+app.get('/',(req,res)=> {
+    res.json({name:'Engin'},{name:'Susan'})
 })
 
-
-server.listen(8000)
-
+app.listen(8000, () => {
+    console.log('Server is listening on port 8000...')
+})
