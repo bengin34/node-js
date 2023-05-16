@@ -6,6 +6,8 @@ const dotenv = require('dotenv')
 dotenv.config()
 const authRoute = require("./routes/auth.js")
 const userRoute = require("./routes/user.js")
+const blogRoute = require("./routes/blogs.js")
+const cookieParser = require('cookie-parser')
 
 
 
@@ -31,10 +33,12 @@ const connect = async () => {
 
 // } )
 app.use(express.json())
+app.use(cookieParser())
 
 
 app.use("/api/user", userRoute)
 app.use("/api/auth", authRoute)
+app.use("/api/blog", blogRoute)
 
 
 app.get('/', (req,res) => {
