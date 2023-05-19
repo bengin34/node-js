@@ -1,9 +1,10 @@
 const express = require("express");
 const Blog = require("../models/Blog.js");
+const {verifyAdmin, verifyUser} = require("../utils/verifyToken.js")
 
 const router = express.Router()
 
-router.get('/', async (req,res,next) => {
+router.get('/',verifyUser, async (req,res,next) => {
     try {
         const blogs = await Blog.find()
         res.status(200).json({success:true, data:blogs})
@@ -12,7 +13,7 @@ router.get('/', async (req,res,next) => {
     }
 })
 
-router.get('/:id', async (req,res,next) => {
+router.get('/:id',verifyUser, async (req,res,next) => {
     try {
         const blog = await Blog.findById(id)
         res.status(200).json({success:true, data:blog})
@@ -22,7 +23,7 @@ router.get('/:id', async (req,res,next) => {
     }
 })
 
-router.post('/', async (req,res,next) => {
+router.post('/', verifyUser ,async (req,res,next) => {
     try {
         const blog = await Blog(req.body)
         await blog.save()
@@ -34,7 +35,7 @@ router.post('/', async (req,res,next) => {
 
 
 
-router.put("/:id", async (req, res, next) => {
+router.put("/:id",verifyAdmin, async (req, res, next) => {
     const {id} =req.params
     try {
       const updatedBlog = await User.findByIdAndUpdate(
@@ -43,6 +44,16 @@ router.put("/:id", async (req, res, next) => {
         { new: true }
       );
       res.status(200).json({ success: true, data: updatedBlog });
+    } catch (error) {
+      next(error);
+    }
+  });
+
+router.delete("/:id",verifyAdmin, async (req, res, next) => {
+    const {id} =req.params
+    try {
+      await User.findByIdAndDelete(id );
+      res.status(204).json({ success: true, msg:"Successfully Deleted" });
     } catch (error) {
       next(error);
     }
