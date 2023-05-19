@@ -14,9 +14,12 @@ const getAllProducts = async (req, res) => {
   if(featured){
     queryObject.featured = featured === 'true' ? true : false
   }
+  if(company){
+    queryObject.featured = featured === 'true' ? true : false
+  }
 
   const products = await Product.find(queryObject);
-  console.log(queryObject)
+  
   res.status(200).json({ products, nbHits: products.length });
 };
 
@@ -24,3 +27,4 @@ module.exports = {
   getAllProductsStatic,
   getAllProducts,
 };
+//  4.10.21
