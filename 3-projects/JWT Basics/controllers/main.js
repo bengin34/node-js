@@ -23,9 +23,9 @@ const login = async (req, res) => {
     const id = new Date().getDate()
 
 //! try to keep payload small, better experience for user    
-    const token = jwt.sign({id, username},process.env.JWT_SECRET)
+    const token = jwt.sign({id, username},process.env.JWT_SECRET,{expiresIn:'30d'})
 
-    res.send("Fake Login/ Register/ Signup");
+    res.status(200).json({msg:'user created', token})
   };
   
   const dashboard = async (req, res) => {
