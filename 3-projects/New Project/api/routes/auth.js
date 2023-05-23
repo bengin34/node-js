@@ -52,4 +52,18 @@ router.post("/login", async (req, res, next) => {
   }
 });
 
+
+router.post("/logout", (req,res,next) => {
+  try {
+    res.clearCookie("access_token"); // Clear the access token cookie
+    res.status(200).json({ success: true, msg: "Logged out successfully" });
+    
+  } catch (error) {
+    next(error);
+  }
+})
+
+
+
+
 module.exports = router;
