@@ -1,13 +1,14 @@
 const express = require('express')
 const { default: mongoose } = require('mongoose')
 const app = express()
-const port = 3000
+const port = 8000
 const dotenv = require('dotenv')
 dotenv.config()
 const authRoute = require("./routes/auth.js")
 const userRoute = require("./routes/user.js")
 const blogRoute = require("./routes/blogs.js")
 const cookieParser = require('cookie-parser')
+const cors = require('cors')
 
 
 
@@ -34,6 +35,7 @@ const connect = async () => {
 // } )
 app.use(express.json())
 app.use(cookieParser())
+app.use(cors())
 
 
 app.use("/api/user", userRoute)

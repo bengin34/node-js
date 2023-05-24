@@ -13,7 +13,7 @@ const useAuthCall = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const BASE_URL = "http://localhost:3000/api/";
+  const BASE_URL = "http://localhost:8000/api/";
 
   const login = async (userInfo) => {
     dispatch(fetchStart());
