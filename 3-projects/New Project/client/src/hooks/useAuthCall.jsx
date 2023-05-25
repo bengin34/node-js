@@ -19,6 +19,7 @@ const useAuthCall = () => {
     dispatch(fetchStart());
     try {
       const { data } = await axios.post(`${BASE_URL}auth/login`, userInfo);
+      console.log(data)
       dispatch(loginSuccess(data));
       navigate("/");
     } catch (error) {
@@ -43,7 +44,7 @@ const useAuthCall = () => {
     try {
       await axios.post(`${BASE_URL}auth/logout/`);
       dispatch(logoutSuccess());
-      navigate("/");
+      navigate("/login");
     } catch (error) {
       dispatch(fetchFail());
     }

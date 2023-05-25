@@ -15,7 +15,18 @@ router.post("/register", async (req, res, next) => {
       password: hash,
     });
     await newUser.save();
-    res.status(201).json({ success: true, msg: "Registration successful" });
+    const { password: userPassword, isAdmin, ...otherDetail } = newUser._doc;
+
+    const token = jwt.sign(
+      { id: newUser._id, isAdmin: newUser.isAdmin },
+      process.env.JWT
+  );
+  res.cookie("access_token", token, {
+    httpOnly: true,
+})
+
+    res.status(201).json({ success: true, msg: "Registration successful",
+  data: otherDetail });
   } catch (error) {
     next(error);
   }
